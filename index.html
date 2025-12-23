@@ -1,164 +1,118 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <title>La Ghigliottina - Secret Santa Edition!</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Arial Narrow", Arial, sans-serif;
-      background: linear-gradient(#0a2e6f, #081f4a);
-      color: white;
-    }
+<meta charset="UTF-8">
+<title>La Ghigliottina - Secret Santa Edition!</title>
 
-    header {
-      text-align: center;
-      padding: 20px;
-      font-size: 2rem;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(#0a2e6f, #081f4a);
+  color: white;
+}
 
-    main {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      padding: 20px;
-    }
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+}
 
-    .left {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
 
-    .question {
-      background: #f5c542;
-      color: #0a2e6f;
-      padding: 16px;
-      border-radius: 10px;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 1.2rem;
-    }
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .answers button {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      border: none;
-      background: white;
-      color: #0a2e6f;
-      transition: 0.3s;
-    }
+.question {
+  background: #f5c542;
+  color: #0a2e6f;
+  padding: 16px;
+  border-radius: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
-    .answers button.flash {
-      animation: flash 0.5s alternate 4;
-    }
+.answers {
+  display: flex;
+  flex-direction: column;
+}
 
-    @keyframes flash {
-      from { background: white; }
-      to { background: #f5c542; }
-    }
+.answers button {
+  padding: 14px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
 
-    .right {
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 15px;
-    }
+.answers button.flash {
+  animation: flash 0.4s alternate 4;
+}
 
-    .right h3 {
-      text-align: center;
-      margin-top: 0;
-    }
+@keyframes flash {
+  from { background: white; }
+  to { background: #f5c542; }
+}
 
-    .words {
-      min-height: 150px;
-    }
+.right {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 12px;
+}
 
-    .timer-wrapper {
-      display: none;
-      align-items: center;
-      gap: 15px;
-    }
+.timer-wrapper {
+  display: none;
+  justify-content: center;
+}
 
-    .timer {
-      width: 90px;
-      height: 90px;
-      background: #f5c542;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: white;
-      animation: pulse 1s infinite;
-    }
+.timer {
+  width: 100px;
+  height: 100px;
+  background: #f5c542;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: white;
+  animation: pulse 1s infinite;
+}
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+@keyframes pulse {
+  50% { transform: scale(1.05); }
+}
 
-    .gift-box {
-      display: none;
-      margin-top: 20px;
-    }
+.gift-box {
+  display: none;
+}
 
-    .gift-box input {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-    }
-
-    .gift-box button {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
-      font-size: 1.1rem;
-      cursor: pointer;
-    }
-
-    .final {
-      display: none;
-      background: #b30000;
-      border-radius: 15px;
-      padding: 25px;
-      color: white;
-      position: relative;
-    }
-
-    .final::before,
-    .final::after {
-      content: "🌿";
-      position: absolute;
-      font-size: 2rem;
-    }
-
-    .final::before {
-      top: 10px;
-      left: 10px;
-    }
-
-    .final::after {
-      bottom: 10px;
-      right: 10px;
-    }
-  </style>
+.final {
+  display: none;
+  background: #b30000;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-  🎅 La Ghigliottina - Secret Santa Edition!
-</header>
+<header>🎅 La Ghigliottina - Secret Santa Edition!</header>
 
 <main>
   <div class="left">
     <div class="question" id="question"></div>
-
     <div class="answers" id="answers"></div>
 
     <div class="timer-wrapper" id="timerWrapper">
@@ -166,8 +120,8 @@
     </div>
 
     <div class="gift-box" id="giftBox">
-      <input type="text" placeholder="Scrivi qui il regalo..." id="giftInput" />
-      <button onclick="reveal()">Scopri se hai indovinato!</button>
+      <input id="giftInput" placeholder="Scrivi qui il regalo..." style="width:100%;padding:10px">
+      <button onclick="reveal()" style="margin-top:10px;width:100%">Scopri se hai indovinato!</button>
     </div>
 
     <div class="final" id="finalMessage"></div>
@@ -175,7 +129,7 @@
 
   <div class="right">
     <h3>Parole collegate</h3>
-    <div class="words" id="words"></div>
+    <div id="words"></div>
   </div>
 </main>
 
@@ -207,11 +161,11 @@ function loadQuestion() {
   });
 }
 
-function selectAnswer(button, answer) {
-  button.classList.add("flash");
+function selectAnswer(btn, ans) {
+  btn.classList.add("flash");
 
-  if (answer !== questions[current].correct) {
-    prize = prize / 2;
+  if (ans !== questions[current].correct) {
+    prize /= 2;
   }
 
   setTimeout(() => {
@@ -244,4 +198,14 @@ function startTimer() {
   }, 1000);
 }
 
-function
+function reveal() {
+  document.getElementById("finalMessage").style.display = "block";
+  document.getElementById("finalMessage").innerHTML =
+    `🎁 Un contributo pari a <strong>${prize}€</strong> per l'acquisto di 1 biglietto per i Campionati del Mondo di Ginnastica Acrobatica (17–26 settembre a Pesaro) – quando sarà possibile comprarli! :D`;
+}
+
+document.addEventListener("DOMContentLoaded", loadQuestion);
+</script>
+
+</body>
+</html>
