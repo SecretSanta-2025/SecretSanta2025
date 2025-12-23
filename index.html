@@ -53,15 +53,27 @@ main {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  background: white;
+  color: #0a2e6f;
 }
 
-.answers button.flash {
-  animation: flash 0.4s alternate 4;
+/* Animazioni risposta */
+.answers button.correct {
+  animation: flashGreen 0.4s alternate 4;
 }
 
-@keyframes flash {
+.answers button.wrong {
+  animation: flashRed 0.4s alternate 4;
+}
+
+@keyframes flashGreen {
   from { background: white; }
-  to { background: #f5c542; }
+  to { background: #2ecc71; }
+}
+
+@keyframes flashRed {
+  from { background: white; }
+  to { background: #e74c3c; }
 }
 
 .right {
@@ -96,12 +108,27 @@ main {
   display: none;
 }
 
+.gift-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.gift-box button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 .final {
   display: none;
   background: #b30000;
   padding: 25px;
   border-radius: 15px;
   margin-top: 20px;
+  color: white;
 }
 </style>
 </head>
@@ -120,8 +147,8 @@ main {
     </div>
 
     <div class="gift-box" id="giftBox">
-      <input id="giftInput" placeholder="Scrivi qui il regalo..." style="width:100%;padding:10px">
-      <button onclick="reveal()" style="margin-top:10px;width:100%">Scopri se hai indovinato!</button>
+      <input id="giftInput" placeholder="Scrivi qui il regalo..." />
+      <button onclick="reveal()">Scopri se hai indovinato!</button>
     </div>
 
     <div class="final" id="finalMessage"></div>
@@ -162,14 +189,17 @@ function loadQuestion() {
 }
 
 function selectAnswer(btn, ans) {
-  btn.classList.add("flash");
+  const correct = questions[current].correct;
 
-  if (ans !== questions[current].correct) {
+  if (ans === correct) {
+    btn.classList.add("correct");
+  } else {
+    btn.classList.add("wrong");
     prize /= 2;
   }
 
   setTimeout(() => {
-    wordsEl.innerHTML += `<div>${questions[current].correct}</div>`;
+    wordsEl.innerHTML += `<div>${correct}</div>`;
     current++;
 
     if (current < questions.length) {
